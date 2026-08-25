@@ -94,6 +94,30 @@ Storybook build thành static output `storybook-static` và có thể deploy pub
 }
 ```
 
+## Pull request automation
+
+Mỗi push lên branch khác default branch sẽ tạo hoặc cập nhật một GitHub Pull
+Request duy nhất. Workflow dùng `GITHUB_TOKEN`, không dùng MCP hoặc personal
+access token; PR được tạo bởi GitHub Actions, còn assignee mặc định là người
+push branch.
+
+Trước khi sử dụng, vào **Settings → Actions → General → Workflow permissions**
+và cho phép workflow có quyền ghi, sau đó bật **Allow GitHub Actions to create
+and approve pull requests**. Workflow chỉ yêu cầu `issues: write` và
+`pull-requests: write` ngoài quyền đọc nội dung repository.
+
+Bạn có thể để reviewer trống, chọn reviewer thủ công trong PR, hoặc đặt Actions
+variables cấp repository tại **Settings → Secrets and variables → Actions →
+Variables**:
+
+- `DEFAULT_REVIEWERS`: danh sách username GitHub, cách nhau bởi dấu phẩy, ví dụ
+  `mai,anh`.
+- `DEFAULT_TEAM_REVIEWERS`: danh sách team slug, cách nhau bởi dấu phẩy, ví dụ
+  `frontend,platform`.
+
+Reviewer phải có quyền phù hợp trong repository. Không đặt chính tác giả PR làm
+reviewer; GitHub sẽ từ chối review request đó.
+
 ## Security boundary
 
 Public `landify-base` không được chứa token, secret, dữ liệu khách hàng, asset giới hạn license hoặc logic dành riêng cho brand/campaign. Landing repository của từng khách hàng có thể vẫn là private.
