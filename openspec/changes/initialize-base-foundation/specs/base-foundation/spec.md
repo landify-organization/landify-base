@@ -16,22 +16,26 @@ The system SHALL allow a Nuxt consumer to extend a public, version-tagged `landi
 - **THEN** the consumer SHALL retain the previous base behavior until that configuration change is made and validated
 
 ### Requirement: Consumers receive reusable runtime foundations only
-The system SHALL provide shared UI components, composables, layouts, utility functions, CSS tokens, and Nuxt runtime configuration while excluding brand-specific content, campaign integrations, tracking identifiers, and secrets.
+The system SHALL provide shared UI primitives, generic UI blocks, composables, layouts, utility functions, CSS tokens, and Nuxt runtime configuration while excluding brand-specific content, business data, permission decisions, campaign integrations, tracking identifiers, and secrets.
 
 #### Scenario: Consumer uses a shared UI primitive
 - **WHEN** a consumer extends the base Layer
 - **THEN** it SHALL be able to use the Layer's reusable UI primitives without copying their source files into the consumer repository
 
-#### Scenario: Consumer needs brand-specific behavior
-- **WHEN** a landing page requires a brand-, campaign-, or product-specific feature
+#### Scenario: Consumer needs business-specific behavior
+- **WHEN** a consumer requires a brand-, campaign-, product-, or business-specific feature
 - **THEN** that feature SHALL remain in the consumer repository rather than be added to `landify-base`
 
 ### Requirement: The base provides overrideable design foundations
-The system SHALL expose semantic design tokens that consumers can override without modifying shared component source code.
+The system SHALL expose shadcn-vue-compatible semantic design tokens, including background, foreground, primary, and border roles, that consumers can override without modifying shared component source code.
 
 #### Scenario: Consumer customizes a semantic token
 - **WHEN** a consumer defines a replacement value for a documented semantic token
 - **THEN** shared components using that token SHALL render with the consumer's replacement value
+
+#### Scenario: Consumer uses a shared block in an admin or marketing surface
+- **WHEN** a consumer renders a generic shared block in an admin, dashboard, or marketing surface
+- **THEN** the block SHALL not require consumer business data access, permission logic, analytics, or campaign-specific source code from the base Layer
 
 ### Requirement: Local tooling and preview are reproducible
 The system SHALL provide documented local quality commands, automatic Tailwind class sorting through the project's formatter, and a Storybook preview that reports accessibility findings without making automated tests a Sprint 1 release gate.

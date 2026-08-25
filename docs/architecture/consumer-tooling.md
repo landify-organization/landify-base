@@ -10,9 +10,7 @@ Tài liệu này xác định cấu hình nào được consumer nhận qua `lan
 
 ```ts
 export default defineNuxtConfig({
-  extends: [
-    ['github:your-org/landify-base#v1.0.0', { install: true }],
-  ],
+  extends: [['github:your-org/landify-base#v1.0.0', { install: true }]],
 })
 ```
 
@@ -23,14 +21,14 @@ export default defineNuxtConfig({
 
 ## Ownership matrix
 
-| Concern | Nuxt `extends` kế thừa | Owner ở giai đoạn đầu | Owner về sau |
-| --- | --- | --- | --- |
-| Components, composables, layouts, utils, CSS tokens, Nuxt config | Có | `landify-base` | `landify-base` |
-| Runtime dependency do Layer import | Có, qua `install: true` | `landify-base` | `landify-base` |
-| ESLint flat config | Không | `landify-base` local config | `landify-tooling` + consumer wrapper |
-| Prettier và Tailwind class sorting | Không | `landify-base` local config | `landify-tooling` + consumer wrapper |
-| VS Code extension/settings | Không | `landify-base/.vscode` | template hoặc devkit sync |
-| Storybook | Không | `landify-base` local dev tooling | Từng repo quyết định có cần hay không |
+| Concern                                                          | Nuxt `extends` kế thừa  | Owner ở giai đoạn đầu            | Owner về sau                          |
+| ---------------------------------------------------------------- | ----------------------- | -------------------------------- | ------------------------------------- |
+| Components, composables, layouts, utils, CSS tokens, Nuxt config | Có                      | `landify-base`                   | `landify-base`                        |
+| Runtime dependency do Layer import                               | Có, qua `install: true` | `landify-base`                   | `landify-base`                        |
+| ESLint flat config                                               | Không                   | `landify-base` local config      | `landify-tooling` + consumer wrapper  |
+| Prettier và Tailwind class sorting                               | Không                   | `landify-base` local config      | `landify-tooling` + consumer wrapper  |
+| VS Code extension/settings                                       | Không                   | `landify-base/.vscode`           | template hoặc devkit sync             |
+| Storybook                                                        | Không                   | `landify-base` local dev tooling | Từng repo quyết định có cần hay không |
 
 ## Local tooling lifecycle
 
@@ -49,6 +47,22 @@ export default {
 ```
 
 VS Code dùng Prettier làm default formatter và bật `formatOnSave`. CLI format check vẫn là nguồn xác nhận cuối cùng trong CI.
+
+## UI source and token ownership
+
+`landify-base` uses shadcn-vue as a source generator, not as a packaged component library. The Base repository owns the generated source under `app/components/ui/`, reviews it like any other source change, and exposes Landify-named `Ui*` primitives to consumers. Reka UI remains an internal behavior dependency.
+
+The Layer uses shadcn-vue semantic CSS variables. Consumers override theme values in CSS loaded after the Layer instead of forking components:
+
+```css
+:root {
+  --primary: var(--color-emerald-600);
+  --primary-foreground: var(--color-white);
+  --ring: var(--color-emerald-700);
+}
+```
+
+`Block*` components may be shared between marketing, dashboard, and back-office surfaces, but they never include consumer business data, permissions, API integration, analytics, or campaign-specific content.
 
 ### Sprint 5: Template copies a working snapshot
 

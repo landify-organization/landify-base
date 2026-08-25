@@ -7,14 +7,14 @@ See `proposal.md` for motivation. This repository has no application or dependen
 **Goals:**
 
 - Deliver a public, tag-pinned Remote Git Layer with an explicit runtime/developer-tooling boundary.
-- Establish a CSS-first semantic token system and accessible component foundation before adding the core component set.
+- Establish a shadcn-vue-compatible semantic token system and accessible component foundation before adding the core component set.
 - Make local development, formatting, preview, and static Storybook deployment repeatable.
 
 **Non-Goals:**
 
 - Publishing an npm package or creating `landify-tooling` and `landify-template` during Sprint 1.
 - Building complete component documentation, automated component tests, visual regression testing, or a CI quality gate for accessibility.
-- Adding business-specific landing pages, backend services, analytics, or brand assets.
+- Adding business-specific marketing pages, admin features, backend services, analytics, or brand assets.
 
 ## Decisions
 
@@ -30,15 +30,25 @@ The Layer will own Nuxt runtime configuration, CSS, components, composables, lay
 
 Nuxt's remote Layer mechanism cannot make tooling dependencies available to a consumer's formatter or linter. `landify-template` will initially provide a snapshot of consumer tooling; `landify-tooling` will later centralize the proven configuration. Consumers will retain minimal local wrappers where their file paths differ, especially the Tailwind v4 stylesheet path used by Prettier.
 
-### Tailwind v4 uses CSS-first semantic tokens
+### Tailwind v4 uses shadcn-vue semantic tokens
 
-Tailwind CSS v4 will be integrated through its Vite plugin. Primitive values and semantic aliases will be separated in CSS. `@theme` creates utility-backed tokens; standard CSS variables hold values that do not need utilities. Shared components consume semantic tokens, allowing consumer themes to override appearance without source forks.
+Tailwind CSS v4 will be integrated through its Vite plugin. The Layer will use the standard semantic token vocabulary expected by shadcn-vue, such as `--background`, `--foreground`, `--primary`, and `--border`, with a neutral default theme. `@theme inline` will expose those variables through Tailwind utilities such as `bg-primary` and `text-foreground`.
+
+The prior Landify-prefixed color primitive and semantic variables will be removed. Consumers override the standard semantic tokens in CSS loaded after the Layer, rather than modifying shared component source. This preserves direct compatibility with shadcn-vue source components and avoids a duplicate token mapping.
 
 The supported-browser baseline is Safari 16.4+, Chrome 111+, and Firefox 128+, matching Tailwind v4's browser requirements.
 
-### Reka UI is wrapped, not exposed as Landify's public component API
+### shadcn-vue supplies source-owned `Ui*` primitives above Reka UI
 
-Reka UI provides accessible low-level behavior. Landify will build and document `Ui*` components above it. This prevents consumer code from becoming coupled to a third-party primitive structure and keeps Landify's public API controlled.
+Reka UI provides accessible low-level behavior. shadcn-vue will generate selected, source-owned primitives in `app/components/ui/`; Landify's public naming convention uses `Ui*` names. This gives Landify editable component source while preventing consumer code from coupling directly to Reka's primitive structure.
+
+Only components needed by the Base contract will be added. The CLI configuration remains in the repository so new primitives can be added deliberately and reviewed as source changes.
+
+### `Block*` replaces the landing-only pattern convention
+
+`Block*` denotes generic compositions of `Ui*` primitives that can serve marketing, dashboard, or back-office surfaces: for example `BlockHero`, `BlockPageHeader`, `BlockStats`, and `BlockEmptyState`. A generic `UiCard` remains a primitive; a composed `BlockFeatureCard` can represent a reusable marketing pattern.
+
+Blocks must not contain consumer business data, permission decisions, API calls, analytics, or campaign-specific content. Those remain in each consumer repository.
 
 ### Storybook is preview-only in Sprint 1
 
@@ -57,6 +67,7 @@ Sprint 1 will not install a unit-test runner. Utilities and composables will rem
 - [Template configuration is a snapshot] → document the ownership boundary and introduce shared tooling only after the Base configuration has proven stable.
 - [Manual a11y review can miss regressions] → retain the addon panel now and add automated tests and a release gate in Sprint 4.
 - [Tailwind v4 excludes older browsers] → establish and document the supported-browser baseline before component implementation.
+- [Generated component source can diverge from upstream shadcn-vue] → treat generated files as owned source, add components selectively, and review any CLI overwrite before accepting it.
 
 ## Migration Plan
 

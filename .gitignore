@@ -1,0 +1,18 @@
+# Nuxt
+.nuxt/
+.output/
+
+# Dependencies
+node_modules/
+
+# Storybook
+storybook-static/
+
+# Environment and local state
+.env
+.env.*
+!.env.example
+
+# Editor and operating system files
+.DS_Store
+*.swp

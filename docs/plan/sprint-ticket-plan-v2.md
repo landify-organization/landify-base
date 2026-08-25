@@ -40,16 +40,16 @@ Goal: establish a complete development foundation for `landify-base` before expa
 | [LF-Base] [Setup] Initialize Nuxt 4 Layer | High | M | architecture, enhancement |
 | [LF-Base] [Architecture] Define project structure | High | S | architecture |
 | [LF-Base] [Setup] Configure Tailwind CSS v4 | High | M | theme, build |
-| [LF-Base] [Architecture] Define design token system | High | L | architecture, theme |
-| [LF-Base] [Setup] Add Reka UI and core dependencies | High | S | ui, accessibility |
+| [LF-Base] [Architecture] Define shadcn-vue semantic token system | High | L | architecture, theme |
+| [LF-Base] [Setup] Initialize shadcn-vue, Reka UI and core dependencies | High | S | ui, accessibility |
 | [LF-Base] [Setup] Configure Storybook preview | High | M | storybook |
 | [LF-Base] [Setup] Configure Storybook manual accessibility feedback | Medium | S | storybook, accessibility |
 | [LF-Base] [Setup] Configure ESLint | High | M | architecture, build |
 | [LF-Base] [Setup] Configure Prettier and Tailwind class sorting | High | S | architecture, build, theme |
 | [LF-Base] [Setup] Add lint and format scripts | Medium | XS | build |
 | [LF-Base] [Setup] Add VS Code formatting recommendations | Medium | XS | tooling |
-| [LF-Base] [FE] Create shared cn() utility | Medium | XS | architecture, ui |
-| [LF-Base] [Architecture] Define component conventions | High | M | architecture, ui, documentation |
+| [LF-Base] [FE] Create shared shadcn-vue cn() utility | Medium | XS | architecture, ui |
+| [LF-Base] [Architecture] Define Ui*/Block* component conventions | High | M | architecture, ui, documentation |
 
 ### Sprint 2 - Core UI Foundation
 
@@ -65,7 +65,7 @@ Goal: establish a complete development foundation for `landify-base` before expa
 | [LF-Base] [Markup] Implement UiDialog | High | L | markup, ui, accessibility |
 | [LF-Base] [Markup] Implement UiTooltip | High | M | markup, ui, accessibility |
 
-### Sprint 3 - Landing & Extended UI Foundation
+### Sprint 3 - Blocks & Extended UI Foundation
 
 05 Oct - 18 Oct 2026
 
@@ -74,9 +74,10 @@ Goal: establish a complete development foundation for `landify-base` before expa
 | [LF-Base] [Markup] Implement UiSelect | Medium | L | markup, ui, accessibility |
 | [LF-Base] [Markup] Implement UiTabs | Medium | M | markup, ui, accessibility |
 | [LF-Base] [Markup] Implement UiAccordion | Low | M | markup, ui, accessibility |
-| [LF-Base] [Markup] Implement LandingContainer | High | M | markup, ui |
-| [LF-Base] [Markup] Implement LandingSection | High | M | markup, ui |
-| [LF-Base] [Markup] Implement LandingHero | High | L | markup, ui |
+| [LF-Base] [Markup] Implement BlockContainer | High | M | markup, ui |
+| [LF-Base] [Markup] Implement BlockSection | High | M | markup, ui |
+| [LF-Base] [Markup] Implement BlockHero | High | L | markup, ui |
+| [LF-Base] [Markup] Implement BlockPageHeader and BlockEmptyState | Medium | M | markup, ui, admin |
 | [LF-Base] [Markup] Implement ResponsiveImage | High | M | markup, ui, performance |
 | [LF-Base] [Architecture] Define motion and animation conventions | Medium | M | architecture, ui, accessibility |
 
