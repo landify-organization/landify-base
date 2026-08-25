@@ -42,11 +42,12 @@ Goal: establish a complete development foundation for `landify-base` before expa
 | [LF-Base] [Setup] Configure Tailwind CSS v4 | High | M | theme, build |
 | [LF-Base] [Architecture] Define design token system | High | L | architecture, theme |
 | [LF-Base] [Setup] Add Reka UI and core dependencies | High | S | ui, accessibility |
-| [LF-Base] [Setup] Configure Storybook | High | M | storybook, documentation |
-| [LF-Base] [Setup] Configure Storybook accessibility checks | Medium | S | storybook, accessibility |
+| [LF-Base] [Setup] Configure Storybook preview | High | M | storybook |
+| [LF-Base] [Setup] Configure Storybook manual accessibility feedback | Medium | S | storybook, accessibility |
 | [LF-Base] [Setup] Configure ESLint | High | M | architecture, build |
-| [LF-Base] [Setup] Configure Prettier | High | S | architecture, build |
+| [LF-Base] [Setup] Configure Prettier and Tailwind class sorting | High | S | architecture, build, theme |
 | [LF-Base] [Setup] Add lint and format scripts | Medium | XS | build |
+| [LF-Base] [Setup] Add VS Code formatting recommendations | Medium | XS | tooling |
 | [LF-Base] [FE] Create shared cn() utility | Medium | XS | architecture, ui |
 | [LF-Base] [Architecture] Define component conventions | High | M | architecture, ui, documentation |
 
@@ -88,6 +89,8 @@ Goal: establish a complete development foundation for `landify-base` before expa
 | [LF-Base] [Setup] Create minimal consumer fixture | High | M | architecture, build |
 | [LF-Base] [FE] Validate tree-shaking in consumer app | High | M | build, performance |
 | [LF-Base] [FE] Validate SSR and hydration behavior | High | M | build, performance |
+| [LF-Base] [Setup] Configure Vitest and Nuxt test utilities | Medium | S | build, testing |
+| [LF-Base] [FE] Add critical tests for stable UI components | Medium | M | ui, testing |
 | [LF-Base] [Architecture] Define component maturity model | Low | S | architecture, documentation |
 | [LF-Base] [Docs] Define component documentation guidelines | Medium | S | documentation, storybook |
 | [LF-Base] [Release] Prepare landify-base v1.0.0 | High | M | build, documentation |
@@ -204,7 +207,9 @@ Goal: extract the ESLint/Prettier conventions that were used and refined in `lan
 
 - Phase 1 is intentionally larger because it establishes the reusable foundation and reference implementation.
 
-- ESLint, Prettier, and lint/format scripts are intentionally configured inside `landify-base` in Sprint 1 so Base development is productive from day one. Phase 3 later extracts the proven configuration into `landify-tooling`; Base should not wait for the shared package to exist.
+- ESLint, Prettier, Tailwind class sorting, VS Code formatting recommendations, and lint/format scripts are intentionally configured inside `landify-base` in Sprint 1 so Base development is productive from day one. Template copies the proven local setup in Phase 2; Phase 3 later extracts the stable configuration into `landify-tooling`.
+
+- Storybook in Sprint 1 is a lightweight preview with manual a11y feedback. Automated component, visual, and accessibility tests are deferred; unit-test infrastructure and critical component tests are planned for Sprint 4 before `landify-base v1.0.0`.
 
 - Phases 2-4 are initially planned as two sprints each and may be adjusted after Phase 1 reveals actual velocity.
 
