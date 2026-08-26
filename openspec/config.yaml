@@ -1,0 +1,33 @@
+schema: spec-driven
+
+context: |
+  Landify is a frontend platform for reusable landing-page foundations.
+  landify-base is a public Nuxt 4 Remote Git Layer consumed through a pinned
+  release tag and `install: true`; it is not published as an npm package.
+  Use TypeScript, Tailwind CSS v4, Reka UI, and pnpm. Keep runtime Layer
+  concerns separate from local developer tooling: ESLint, Prettier, Tailwind
+  class sorting, editor settings, and Storybook are supplied locally, then by
+  the template/tooling repositories when those phases begin. Never put secrets,
+  customer data, restricted assets, or brand-specific behavior in landify-base.
+
+# Per-artifact rules (optional)
+# Add custom rules for specific artifacts.
+# Example:
+#   rules:
+#     proposal:
+#       - Keep proposals under 500 words
+#       - Always include a "Non-goals" section
+#     tasks:
+#       - Break tasks into chunks of max 2 hours
+
+# Per-operation guidance (optional)
+# Add advisory guidance for how apply and archive work should be conducted.
+# This is separate from artifact rules above.
+# Example:
+#   operations:
+#     apply:
+#       guidance:
+#         - Keep test summaries concise
+#     archive:
+#       guidance:
+#         - Summarize the archive outcome before finishing
