@@ -10,6 +10,8 @@
       repository Actions variables.
 - [x] 1.5 Derive clean PR text and a related same-repository issue from the
       optional `type: [ticket] description` commit convention.
+- [x] 1.6 Retain the full first commit as the PR title and remove commit SHA
+      identifiers from the generated change list.
 
 ## 2. Verification and Guidance
 

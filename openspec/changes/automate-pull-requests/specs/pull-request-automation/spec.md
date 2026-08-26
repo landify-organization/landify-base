@@ -25,22 +25,23 @@ request.
 ### Requirement: Pull request content reflects the branch commit range and ticket prefix
 The automation SHALL construct the pull request body from the repository pull
 request template. For a commit subject matching
-`type: [ticket-number] description`, it SHALL use `description` as the PR title,
-summary, and the text in the change list, and SHALL set the related issue field
-to `Closes #ticket-number`. It SHALL preserve the full subject text for commits
-that do not match this convention. The change list SHALL include every commit in
-the default-branch-to-head range.
+`type: [ticket-number] description`, it SHALL retain the full subject as the PR
+title, use `description` as the summary and text in the change list, and set the
+related issue field to `Closes #ticket-number`. It SHALL preserve the full
+subject text for commits that do not match this convention. The change list
+SHALL include every commit in the default-branch-to-head range without commit
+SHA identifiers.
 
 #### Scenario: First commit contains a ticket prefix
 - **WHEN** the first commit subject is `feat: [1] Set up git PR github`
-- **THEN** the PR title and summary are `Set up git PR github`, and the PR body
-  contains `Closes #1`
+- **THEN** the PR title is `feat: [1] Set up git PR github`, the summary is
+  `Set up git PR github`, and the PR body contains `Closes #1`
 
 #### Scenario: Branch contains commits ahead of the default branch
 - **WHEN** the pull request is created or updated for a branch with one or more
   commits ahead of the default branch
 - **THEN** its changes section lists every commit in order using the cleaned text
-  when that commit has a ticket prefix
+  when that commit has a ticket prefix and without a commit SHA
 
 #### Scenario: Commit has no ticket prefix
 - **WHEN** a commit subject does not match the ticket-prefix convention

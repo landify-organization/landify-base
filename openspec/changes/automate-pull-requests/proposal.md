@@ -10,7 +10,7 @@ unnecessary steps to the development flow.
   non-default branch and updates that same pull request on later pushes.
 - Populate a standard pull request body from a repository template, with the
   first branch commit as the summary and all branch commits as the change list.
-- Derive a clean PR title and same-repository issue link from commit subjects
+- Derive a clean PR summary and same-repository issue link from commit subjects
   that use the `type: [ticket] description` convention.
 - Assign the person who pushed the branch by default, while allowing optional
   reviewer configuration without storing a personal access token.

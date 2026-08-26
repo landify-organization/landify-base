@@ -120,9 +120,9 @@ reviewer; GitHub sẽ từ chối review request đó.
 
 Để workflow tự đặt tiêu đề gọn và liên kết GitHub Issue cùng repository, dùng
 commit subject theo dạng `type: [ticket] description`, ví dụ
-`feat: [1] Set up git PR github`. PR sẽ hiển thị `Set up git PR github` và có
-`Closes #1` trong mô tả. Subject không theo dạng này được giữ nguyên, không suy
-ra issue nào.
+`feat: [1] Set up git PR github`. Title PR giữ nguyên subject này; Summary và
+Changes hiển thị `Set up git PR github`, không kèm SHA, và mô tả có `Closes #1`.
+Subject không theo dạng này được giữ nguyên, không suy ra issue nào.
 
 ## Security boundary
 

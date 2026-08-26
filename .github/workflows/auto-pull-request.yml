@@ -49,11 +49,12 @@ jobs:
               }
             }
             const firstCommit = parseSubject(commits[0])
+            const title = commits[0].commit.message.split('\n')[0]
             const summary = firstCommit.text
             const changes = commits
               .map((commit) => {
                 const { text } = parseSubject(commit)
-                return `- \`${commit.sha.slice(0, 7)}\` ${text}`
+                return `- ${text}`
               })
               .join('\n')
             const relatedIssue = firstCommit.issueNumber
@@ -97,7 +98,7 @@ jobs:
             const pullRequestData = {
               owner,
               repo,
-              title: summary,
+              title,
               body,
             }
             const pullNumber = pullRequest

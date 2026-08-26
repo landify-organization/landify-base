@@ -34,9 +34,9 @@ than a user-owned secret.
   workflow reads the same template that GitHub shows for manually created pull
   requests.
 - Parse the optional `type: [ticket-number] description` commit convention. The
-  parser uses `description` for human-facing PR text and fills
-  `Closes #ticket-number` only for a same-repository ticket; non-matching
-  commit subjects remain untouched.
+  parser retains the full first subject for the PR title, uses `description` for
+  the summary and change list, and fills `Closes #ticket-number` only for a
+  same-repository ticket; non-matching commit subjects remain untouched.
 - Assign `github.actor` by default. Read optional reviewer configuration from
   repository-level Actions variables (`DEFAULT_REVIEWERS` and
   `DEFAULT_TEAM_REVIEWERS`), so no secret is needed and maintainers can change
@@ -51,7 +51,9 @@ than a user-owned secret.
   optional; GitHub API validation errors for an ineligible reviewer will be
   surfaced in the workflow log rather than silently ignored.
 - [Very large commit ranges] → The workflow retrieves paginated comparison data
-  and limits the displayed commit subject to the PR's commit range.
+  on every push. Normal feature branches are lightweight because the workflow
+  does not check out, build, or test source; a branch with hundreds of commits
+  may need a future list limit to keep the PR body manageable.
 
 ## Migration Plan
 
