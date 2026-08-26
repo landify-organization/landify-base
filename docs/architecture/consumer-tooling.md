@@ -53,6 +53,29 @@ export default {
 
 VS Code dùng Prettier làm default formatter và bật `formatOnSave`. CLI format check vẫn là nguồn xác nhận cuối cùng trong CI.
 
+## Tailwind source discovery
+
+Tailwind CSS v4 tự quét source của consumer từ project hiện tại, nên Template và
+consumer không cần khai báo đường dẫn đến `app/`, `components/` hoặc `pages/` của
+chính chúng. Tuy nhiên, Tailwind mặc định bỏ qua dependency directory. Vì
+`landify-base` được Nuxt tải như một Remote Git Layer, Base phải tự đăng ký source
+của nó trong stylesheet:
+
+```css
+@import 'tailwindcss';
+@source '../..'; /* từ app/assets/css/main.css tới app/ của landify-base */
+@import 'tw-animate-css';
+```
+
+Nhờ vậy, static utility class trong `landify-base/app/**` được sinh ra khi
+consumer build, bất kể Nuxt đặt source Layer ở thư mục cache nào. Không thêm path
+của consumer vào Base: làm vậy khiến Base phụ thuộc vào cấu trúc thư mục của từng
+project.
+
+`@source` chỉ giúp Tailwind tìm file, không nhận biết class tạo động, ví dụ
+`` `bg-${color}-500` ``. Với trường hợp này, dùng map class tĩnh hoặc safelist rõ
+ràng bằng `@source inline(...)` theo tài liệu Tailwind.
+
 ## UI source and token ownership
 
 `landify-base` uses shadcn-vue as a source generator, not as a packaged component library. The Base repository owns the generated source under `app/components/ui/`, reviews it like any other source change, and exposes Landify-named `Ui*` primitives to consumers. Reka UI remains an internal behavior dependency.

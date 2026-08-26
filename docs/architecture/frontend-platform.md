@@ -79,6 +79,11 @@ Khi `landify-base` phát hành `v0.2.0`, Page A/B vẫn ở `v0.1.0` cho tới k
 
 Nuxt `extends` chỉ kế thừa runtime/build concern: Nuxt config, component, composable, layout, utility, CSS token và runtime dependency của Layer. Nó không truyền ESLint, Prettier, plugin sắp xếp Tailwind class hay cấu hình editor vào consumer.
 
+Tailwind CSS v4 tự quét source của consumer; còn `landify-base` đăng ký rõ
+`app/` của nó bằng `@source` trong stylesheet. Điều này giữ các utility class của
+Base xuất hiện trong consumer build dù source Layer nằm trong dependency cache.
+Xem `docs/architecture/consumer-tooling.md` để biết giới hạn với dynamic class.
+
 ### UI source và semantic token contract
 
 `landify-base` dùng shadcn-vue như một source distribution: CLI thêm source component vào Base, sau đó Landify sở hữu và review source đó như code nội bộ. Reka UI vẫn là lớp headless/accessibility bên dưới. Consumer dùng public `Ui*` component của Layer, không gọi Reka trực tiếp.
