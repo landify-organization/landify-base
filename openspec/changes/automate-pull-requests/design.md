@@ -30,8 +30,13 @@ than a user-owned secret.
   logic. It receives the built-in token and avoids adding a runtime dependency
   or committing a standalone script.
 - Rename the template to `.github/pull_request_template.md` and use
-  `{{SUMMARY}}` and `{{CHANGES}}` placeholders. The workflow reads the same
-  template that GitHub shows for manually created pull requests.
+  `{{SUMMARY}}`, `{{CHANGES}}`, and `{{RELATED_ISSUE}}` placeholders. The
+  workflow reads the same template that GitHub shows for manually created pull
+  requests.
+- Parse the optional `type: [ticket-number] description` commit convention. The
+  parser uses `description` for human-facing PR text and fills
+  `Closes #ticket-number` only for a same-repository ticket; non-matching
+  commit subjects remain untouched.
 - Assign `github.actor` by default. Read optional reviewer configuration from
   repository-level Actions variables (`DEFAULT_REVIEWERS` and
   `DEFAULT_TEAM_REVIEWERS`), so no secret is needed and maintainers can change

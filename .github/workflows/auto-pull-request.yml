@@ -37,11 +37,28 @@ jobs:
               return
             }
 
-            const subject = (commit) => commit.commit.message.split('\n')[0]
-            const summary = subject(commits[0])
+            const parseSubject = (commit) => {
+              const rawSubject = commit.commit.message.split('\n')[0]
+              const ticketMatch = rawSubject.match(
+                /^[a-z]+(?:\([^)]+\))?!?:\s*\[(\d+)\]\s+(.+)$/i,
+              )
+
+              return {
+                issueNumber: ticketMatch?.[1],
+                text: ticketMatch?.[2] || rawSubject,
+              }
+            }
+            const firstCommit = parseSubject(commits[0])
+            const summary = firstCommit.text
             const changes = commits
-              .map((commit) => `- \`${commit.sha.slice(0, 7)}\` ${subject(commit)}`)
+              .map((commit) => {
+                const { text } = parseSubject(commit)
+                return `- \`${commit.sha.slice(0, 7)}\` ${text}`
+              })
               .join('\n')
+            const relatedIssue = firstCommit.issueNumber
+              ? `Closes #${firstCommit.issueNumber}`
+              : '-'
             let templateFile
             try {
               templateFile = await github.rest.repos.getContent({
@@ -67,6 +84,7 @@ jobs:
             const body = template
               .replace('{{SUMMARY}}', summary)
               .replace('{{CHANGES}}', changes)
+              .replace('{{RELATED_ISSUE}}', relatedIssue)
             const openPullRequests = await github.paginate(github.rest.pulls.list, {
               owner,
               repo,

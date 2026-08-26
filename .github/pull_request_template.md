@@ -14,4 +14,4 @@
 
 ## Related Issue
 
-Closes #
+{{RELATED_ISSUE}}

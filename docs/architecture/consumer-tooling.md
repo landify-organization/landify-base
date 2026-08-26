@@ -118,6 +118,12 @@ Variables**:
 Reviewer phải có quyền phù hợp trong repository. Không đặt chính tác giả PR làm
 reviewer; GitHub sẽ từ chối review request đó.
 
+Để workflow tự đặt tiêu đề gọn và liên kết GitHub Issue cùng repository, dùng
+commit subject theo dạng `type: [ticket] description`, ví dụ
+`feat: [1] Set up git PR github`. PR sẽ hiển thị `Set up git PR github` và có
+`Closes #1` trong mô tả. Subject không theo dạng này được giữ nguyên, không suy
+ra issue nào.
+
 ## Security boundary
 
 Public `landify-base` không được chứa token, secret, dữ liệu khách hàng, asset giới hạn license hoặc logic dành riêng cho brand/campaign. Landing repository của từng khách hàng có thể vẫn là private.
