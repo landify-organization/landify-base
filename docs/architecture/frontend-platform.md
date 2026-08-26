@@ -65,13 +65,15 @@ landify-base/
 
 ```ts
 export default defineNuxtConfig({
-  extends: [['github:your-org/landify-base#v1.0.0', { install: true }]],
+  extends: [['github:landify-organization/landify-base#v0.1.0', { install: true }]],
 })
 ```
 
 `landify-base` là public repository. Consumer không cần cài package `landify-base` hoặc cấu hình access token; Nuxt tải source Layer và cài runtime dependency của Layer qua `install: true`. Consumer luôn pin tag phát hành, không dùng branch như `main`.
 
-Khi `landify-base` phát hành v1.1.0, Page A/B vẫn ở v1.0.0 cho tới khi chủ động đổi tag và kiểm thử. Đây là khác biệt cốt lõi với template.
+Tag là nhãn Git cố định gắn vào một commit đã được kiểm tra; một release là mốc Base được công bố để consumer dùng, thường mang chính tag đó. Sau khi merge và kiểm tra một phiên bản Base trên `main`, tạo tag như `v0.1.0`, rồi để Template pin tag này. Không tham chiếu `#main`: thay đổi mới trên Base sẽ không tự đi vào consumer.
+
+Khi `landify-base` phát hành `v0.2.0`, Page A/B vẫn ở `v0.1.0` cho tới khi chủ động đổi tag và kiểm thử. Đây là khác biệt cốt lõi với template.
 
 ### Runtime và developer tooling
 

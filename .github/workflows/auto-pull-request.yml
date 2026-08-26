@@ -26,6 +26,20 @@ jobs:
             const base = context.payload.repository.default_branch
             const head = context.ref.replace('refs/heads/', '')
             const actor = context.actor
+            const openPullRequests = await github.paginate(github.rest.pulls.list, {
+              owner,
+              repo,
+              state: 'open',
+              base,
+              head: `${owner}:${head}`,
+              per_page: 100,
+            })
+
+            if (openPullRequests.length > 0) {
+              core.info('An open pull request already exists; preserving it unchanged.')
+              return
+            }
+
             const commits = await github.paginate(
               github.rest.repos.compareCommits,
               { owner, repo, base, head, per_page: 100 },
@@ -86,35 +100,19 @@ jobs:
               .replace('{{SUMMARY}}', summary)
               .replace('{{CHANGES}}', changes)
               .replace('{{RELATED_ISSUE}}', relatedIssue)
-            const openPullRequests = await github.paginate(github.rest.pulls.list, {
-              owner,
-              repo,
-              state: 'open',
-              base,
-              head: `${owner}:${head}`,
-              per_page: 100,
-            })
-            const pullRequest = openPullRequests[0]
             const pullRequestData = {
               owner,
               repo,
               title,
               body,
             }
-            const pullNumber = pullRequest
-              ? (
-                  await github.rest.pulls.update({
-                    ...pullRequestData,
-                    pull_number: pullRequest.number,
-                  })
-                ).data.number
-              : (
-                  await github.rest.pulls.create({
-                    ...pullRequestData,
-                    base,
-                    head,
-                  })
-                ).data.number
+            const pullNumber = (
+              await github.rest.pulls.create({
+                ...pullRequestData,
+                base,
+                head,
+              })
+            ).data.number
 
             await github.rest.issues.addAssignees({
               owner,
