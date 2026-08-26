@@ -9,8 +9,9 @@ than a user-owned secret.
 
 **Goals:**
 
-- Create or update a single PR per non-default branch push.
-- Make the generated PR body deterministic from the branch's commit range.
+- Create a single PR for the first non-default branch push.
+- Make the generated PR body deterministic from the branch's commit range at
+  creation time, then preserve all manual PR edits.
 - Keep reviewer configuration optional and visible in repository configuration.
 
 **Non-Goals:**
@@ -22,10 +23,10 @@ than a user-owned secret.
 ## Decisions
 
 - Use one first-party GitHub Actions workflow triggered by `push`, excluding
-  `main`. The workflow will search for an existing PR with the pushed branch as
-  head, then create or update it through the GitHub REST API. This avoids a PAT
-  and avoids creating a separate automation branch, as some generic PR actions
-  do.
+  `main`. The workflow first searches for an existing PR with the pushed branch
+  as head. If one exists, it exits without changing any PR metadata. Otherwise,
+  it creates the PR through the GitHub REST API. This avoids a PAT and avoids
+  creating a separate automation branch, as some generic PR actions do.
 - Use `actions/github-script` for the small amount of REST and body-generation
   logic. It receives the built-in token and avoids adding a runtime dependency
   or committing a standalone script.
@@ -50,10 +51,11 @@ than a user-owned secret.
 - [A configured reviewer cannot review their own PR] → Reviewer variables are
   optional; GitHub API validation errors for an ineligible reviewer will be
   surfaced in the workflow log rather than silently ignored.
-- [Very large commit ranges] → The workflow retrieves paginated comparison data
-  on every push. Normal feature branches are lightweight because the workflow
-  does not check out, build, or test source; a branch with hundreds of commits
-  may need a future list limit to keep the PR body manageable.
+- [Very large initial commit ranges] → The workflow retrieves paginated
+  comparison data only when creating a PR. Normal feature branches are
+  lightweight because the workflow does not check out, build, or test source;
+  a branch with hundreds of commits may need a future list limit to keep the
+  initial PR body manageable.
 
 ## Migration Plan
 
@@ -62,5 +64,6 @@ than a user-owned secret.
    organization policy permits it.
 3. Optionally set `DEFAULT_REVIEWERS` and/or `DEFAULT_TEAM_REVIEWERS` as
    comma-separated Actions variables.
-4. Push a short-lived feature branch and verify the created PR; remove the
+4. Push a short-lived feature branch and verify that its first push creates a
+   PR while a later push preserves its manually edited body; remove the
    workflow to roll back if the repository does not want automatic PRs.

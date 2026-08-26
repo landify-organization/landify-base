@@ -6,9 +6,9 @@ unnecessary steps to the development flow.
 
 ## What Changes
 
-- Add repository automation that creates one pull request for a pushed
-  non-default branch and updates that same pull request on later pushes.
-- Populate a standard pull request body from a repository template, with the
+- Add repository automation that creates one pull request for the first push
+  to a non-default branch and preserves that pull request on later pushes.
+- Populate the initial pull request body from a repository template, with the
   first branch commit as the summary and all branch commits as the change list.
 - Derive a clean PR summary and same-repository issue link from commit subjects
   that use the `type: [ticket] description` convention.
@@ -21,8 +21,8 @@ unnecessary steps to the development flow.
 
 ### New Capabilities
 
-- `pull-request-automation`: Automatically create and maintain documented pull
-  requests for feature branches.
+- `pull-request-automation`: Automatically create a documented pull request
+  for a feature branch while preserving later manual edits.
 
 ### Modified Capabilities
 

@@ -10,7 +10,7 @@ Tài liệu này xác định cấu hình nào được consumer nhận qua `lan
 
 ```ts
 export default defineNuxtConfig({
-  extends: [['github:your-org/landify-base#v1.0.0', { install: true }]],
+  extends: [['github:landify-organization/landify-base#v0.1.0', { install: true }]],
 })
 ```
 
@@ -18,6 +18,11 @@ export default defineNuxtConfig({
 - Không cần access token khi repository là public.
 - Không dùng `main` hoặc tag bị thay đổi; mỗi release dùng tag bất biến.
 - Consumer tự quyết định thời điểm nâng tag và phải kiểm thử trước khi merge.
+
+Trước khi Template hoặc consumer pin một version, merge Base vào `main`, kiểm
+tra phiên bản đó, rồi tạo Git tag/release trên chính commit đã kiểm tra, ví dụ
+`v0.1.0`. Template chỉ là snapshot lúc tạo project; consumer luôn giữ tag đang
+được ghi trong `nuxt.config.ts` cho đến khi chủ động nâng lên tag mới.
 
 ## Ownership matrix
 
@@ -96,10 +101,12 @@ Storybook build thành static output `storybook-static` và có thể deploy pub
 
 ## Pull request automation
 
-Mỗi push lên branch khác default branch sẽ tạo hoặc cập nhật một GitHub Pull
-Request duy nhất. Workflow dùng `GITHUB_TOKEN`, không dùng MCP hoặc personal
-access token; PR được tạo bởi GitHub Actions, còn assignee mặc định là người
-push branch.
+Lần push đầu tiên lên branch khác default branch sẽ tạo một GitHub Pull Request
+duy nhất. Workflow dùng `GITHUB_TOKEN`, không dùng MCP hoặc personal access
+token; PR được tạo bởi GitHub Actions, còn assignee mặc định là người push
+branch. Các push sau khi PR đã tồn tại chỉ kết thúc workflow, không cập nhật
+title, body, assignee hay reviewer; vì vậy các chỉnh sửa thủ công trong PR được
+giữ nguyên.
 
 Trước khi sử dụng, vào **Settings → Actions → General → Workflow permissions**
 và cho phép workflow có quyền ghi, sau đó bật **Allow GitHub Actions to create
@@ -118,11 +125,17 @@ Variables**:
 Reviewer phải có quyền phù hợp trong repository. Không đặt chính tác giả PR làm
 reviewer; GitHub sẽ từ chối review request đó.
 
-Để workflow tự đặt tiêu đề gọn và liên kết GitHub Issue cùng repository, dùng
-commit subject theo dạng `type: [ticket] description`, ví dụ
+Để workflow tự đặt nội dung ban đầu và liên kết GitHub Issue cùng repository,
+dùng commit subject theo dạng `type: [ticket] description`, ví dụ
 `feat: [1] Set up git PR github`. Title PR giữ nguyên subject này; Summary và
 Changes hiển thị `Set up git PR github`, không kèm SHA, và mô tả có `Closes #1`.
-Subject không theo dạng này được giữ nguyên, không suy ra issue nào.
+Workflow chỉ suy ra ticket từ commit đầu tiên. Subject không theo dạng này được
+giữ nguyên, không suy ra issue nào.
+
+Nếu cùng MR hoàn thành ticket khác, thêm thủ công `Closes #2` vào mô tả trước
+khi merge vào default branch; GitHub sẽ đóng ticket đó khi merge. Ticket chỉ
+liên quan nhưng chưa hoàn thành nên được link trong sidebar **Development**
+hoặc ghi `Related to #2`, không dùng keyword đóng Issue.
 
 ## Security boundary
 
