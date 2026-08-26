@@ -10,7 +10,8 @@ interface Props {
 
 withDefaults(defineProps<Props>(), {
   actionLabel: 'Review settings',
-  description: 'Use this generic composition for a focused next step in a marketing or admin surface.',
+  description:
+    'Use this generic composition for a focused next step in a marketing or admin surface.',
   eyebrow: 'Next step',
   title: 'Keep your workspace ready',
 })
@@ -21,7 +22,9 @@ const emit = defineEmits<{
 </script>
 
 <template>
-  <section class="grid gap-5 rounded-xl border bg-card p-6 text-card-foreground shadow-sm">
+  <section
+    class="grid gap-5 rounded-xl border bg-card p-6 text-card-foreground shadow-sm"
+  >
     <div class="space-y-2">
       <p class="text-sm font-medium text-primary">{{ eyebrow }}</p>
       <h2 class="text-xl font-semibold tracking-tight">{{ title }}</h2>
@@ -31,7 +34,10 @@ const emit = defineEmits<{
     </div>
 
     <div class="flex flex-wrap gap-3">
-      <UiButton class="rounded-xl transition-transform hover:-translate-y-0.5 hover:shadow-md" @click="emit('action')">
+      <UiButton
+        class="rounded-2xl transition-transform hover:-translate-y-0.5 hover:shadow-md"
+        @click="emit('action')"
+      >
         {{ actionLabel }}
       </UiButton>
       <slot name="actions" />
