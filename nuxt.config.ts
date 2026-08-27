@@ -12,7 +12,7 @@ export default defineNuxtConfig({
   components: [
     {
       path: join(currentDir, './app/components'),
-      ignore: ['ui/button/**'],
+      ignore: ['ui/button/**', 'ui/card/**'],
     },
   ],
   css: [join(currentDir, './app/assets/css/main.css')],
