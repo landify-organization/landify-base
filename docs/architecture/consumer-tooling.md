@@ -101,6 +101,12 @@ khi consumer chủ động nâng version.
 | ---------------------------------------------------------------- | ----------------------- | -------------------------------- | ------------------------------------- |
 | Components, composables, layouts, utils, CSS tokens, Nuxt config | Có                      | `landify-base`                   | `landify-base`                        |
 | Runtime dependency do Layer import                               | Có, qua `install: true` | `landify-base`                   | `landify-base`                        |
+| Semantic font hooks và system fallback                           | Có                      | `landify-base`                   | `landify-base`                        |
+| Font files, font provider và brand typography                    | Không                   | Consumer                         | Consumer                              |
+| Responsive behavior bên trong shared component                   | Có                      | `landify-base`                   | `landify-base`                        |
+| Page-specific layout và custom breakpoint                        | Không                   | Consumer                         | Consumer                              |
+| Nuxt Image module và shared media usage                          | Có, qua `install: true` | `landify-base`                   | `landify-base`                        |
+| Image provider, remote domains, presets và deployment config     | Không                   | Consumer                         | Consumer                              |
 | ESLint flat config                                               | Không                   | `landify-base` local config      | `landify-tooling` + consumer wrapper  |
 | Prettier và Tailwind class sorting                               | Không                   | `landify-base` local config      | `landify-tooling` + consumer wrapper  |
 | VS Code extension/settings                                       | Không                   | `landify-base/.vscode`           | template hoặc devkit sync             |
@@ -162,6 +168,18 @@ The Layer uses shadcn-vue semantic CSS variables. Consumers override theme value
 ```
 
 `Block*` components may be shared between marketing, dashboard, and back-office surfaces, but they never include consumer business data, permissions, API integration, analytics, or campaign-specific content.
+
+## Typography ownership
+
+Base provides a neutral system fallback and semantic hooks such as `--font-sans` and `--font-heading`. It does not import Google Fonts or another brand font on behalf of every consumer.
+
+A consumer loads its selected font locally or through its preferred Nuxt integration, then overrides the semantic variables after the Layer stylesheet. Shared components inherit those values without source changes.
+
+## Responsive and media ownership
+
+Shared components use Tailwind CSS v4's mobile-first default breakpoints and container queries. A consumer can add page-specific responsive behavior, but should not require Base to introduce a global custom breakpoint for a single campaign.
+
+Base integrates Nuxt Image as the shared responsive-media capability and uses `NuxtImg` or `NuxtPicture` where a reusable block owns image rendering. Each consumer configures its provider, allowed remote domains, presets, and deployment-specific behavior because those choices depend on its asset host and platform.
 
 ### Sprint 5: Template copies a working snapshot
 
