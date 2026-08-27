@@ -4,6 +4,9 @@ This document defines the shared conventions for creating and managing issues ac
 
 > This document is currently maintained in `landify-base` and may be moved to `landify-devkit` when shared developer tooling and standards are introduced.
 
+For the reusable issue description structure and a complete `UiCardBase`
+example, see [Landify Issue Description Template](./issue-template.md).
+
 ## Issue Naming
 
 Use the following format:
