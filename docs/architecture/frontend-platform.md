@@ -75,6 +75,14 @@ Tag là nhãn Git cố định gắn vào một commit đã được kiểm tra;
 
 Khi `landify-base` phát hành `v0.2.0`, Page A/B vẫn ở `v0.1.0` cho tới khi chủ động đổi tag và kiểm thử. Đây là khác biệt cốt lõi với template.
 
+Remote Git Layer là lựa chọn phân phối cho giai đoạn hiện tại, không phải cam kết
+vĩnh viễn. Pin tag ngăn consumer tự nhận thay đổi nhưng clean install vẫn phụ
+thuộc vào repository và tag còn truy cập được. Trước khi có nhiều product
+production, Landify sẽ đánh giá dual distribution: giữ GitHub làm source of
+truth, duy trì Git tag cho consumer cũ và publish cùng Nuxt Layer dưới dạng public
+scoped npm package cho consumer mới. Tiêu chí kích hoạt, rủi ro và checklist
+migration được ghi tại `docs/architecture/consumer-tooling.md`.
+
 ### Runtime và developer tooling
 
 Nuxt `extends` chỉ kế thừa runtime/build concern: Nuxt config, component, composable, layout, utility, CSS token và runtime dependency của Layer. Nó không truyền ESLint, Prettier, plugin sắp xếp Tailwind class hay cấu hình editor vào consumer.

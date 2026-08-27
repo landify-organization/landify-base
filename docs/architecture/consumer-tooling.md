@@ -24,6 +24,77 @@ tra phiên bản đó, rồi tạo Git tag/release trên chính commit đã ki�
 `v0.1.0`. Template chỉ là snapshot lúc tạo project; consumer luôn giữ tag đang
 được ghi trong `nuxt.config.ts` cho đến khi chủ động nâng lên tag mới.
 
+### Distribution decision và hướng migration
+
+Ở giai đoạn hiện tại, Landify tiếp tục ưu tiên public Remote Git Layer vì cách
+này đơn giản, phù hợp với số lượng consumer còn ít và chưa cần vận hành quy trình
+publish package. Đây là quyết định cho giai đoạn đầu, không phải giới hạn kiến
+trúc lâu dài.
+
+Pin Git tag giúp consumer không tự nhận code mới, nhưng không bảo đảm source luôn
+sẵn sàng. Nếu organization/repository bị đổi tên, chuyển private, bị xoá hoặc tag
+không còn truy cập được, bản đã deploy vẫn tiếp tục chạy nhưng clean install,
+CI/CD hoặc lần build mới có thể thất bại. Cache local không được xem là phương án
+backup.
+
+Trong thời gian còn dùng Remote Git Layer:
+
+- Giữ repository dưới ownership của organization và không đổi tên, xoá hoặc
+  chuyển private trước khi có kế hoạch migration cho consumer.
+- Chỉ phát hành từ commit đã kiểm tra trên `main`, tạo tag bất biến và không
+  force-push tag đã có consumer sử dụng.
+- Consumer pin tag cụ thể, giữ quyền chủ động nâng version và kiểm thử sau mỗi
+  lần nâng.
+- Duy trì backup/mirror của source và metadata release để có thể khôi phục kênh
+  phân phối khi cần.
+
+Cân nhắc chuyển sang npm Layer package trước khi có nhiều product production,
+hoặc khi cần một trong các khả năng sau:
+
+- Dependency được quản lý đầy đủ bởi `package.json` và `pnpm-lock.yaml`.
+- Clean install và CI không còn phụ thuộc trực tiếp vào GitHub repository URL.
+- Nâng version bằng package manager hoặc dependency bot.
+- Cần đổi tên, di chuyển hoặc thay đổi visibility của source repository.
+
+Hướng migration ưu tiên là dual distribution: GitHub tiếp tục là source of truth,
+cùng một release vừa có Git tag cho consumer cũ vừa publish public scoped npm
+package cho consumer mới. Consumer được chuyển dần, không cần migrate đồng loạt.
+Package là một Nuxt Layer chứa source, không phải viết lại thành component bundle.
+
+Ví dụ consumer sau migration:
+
+```bash
+pnpm add -D @landify-organization/landify-base@0.1.2
+```
+
+```ts
+export default defineNuxtConfig({
+  extends: ['@landify-organization/landify-base'],
+})
+```
+
+Khi đó không còn cần `{ install: true }`; nếu consumer không dùng Remote Git
+Layer nào khác thì cũng có thể bỏ `giget`. Public package không cần token để cài,
+nhưng người hoặc CI thực hiện publish vẫn phải có quyền trên npm registry.
+
+Trước khi publish package đầu tiên, cần tạo một OpenSpec change riêng để:
+
+1. Chuẩn hoá `name`, semantic `version`, `main`, `files` và `publishConfig` trong
+   `package.json`.
+2. Kiểm tra mọi import runtime và giữ dependency được Layer import trong
+   `dependencies`.
+3. Loại bỏ import dựa trên alias consumer như `@/` hoặc `~/` khỏi source Base.
+4. Chạy `pnpm pack`, cài tarball vào consumer sạch và xác nhận Nuxt build,
+   component auto-import, CSS token và Tailwind `@source` hoạt động từ
+   `node_modules`.
+5. Thiết lập release/publish, sau đó cập nhật Template và migration guide cho
+   consumer hiện có.
+
+npm package làm kênh phân phối ổn định hơn nhưng không loại bỏ dependency logic:
+consumer vẫn phụ thuộc vào public component, token và Nuxt config contract của
+Base. Breaking change vẫn phải dùng semantic versioning và chỉ đi vào consumer
+khi consumer chủ động nâng version.
+
 ## Ownership matrix
 
 | Concern                                                          | Nuxt `extends` kế thừa  | Owner ở giai đoạn đầu            | Owner về sau                          |
