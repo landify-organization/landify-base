@@ -5,10 +5,10 @@ import { cn } from '@/lib/utils'
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from './card'
 
 interface Props {
-  class?: HTMLAttributes['class']
   description?: string
   subtitle?: string
   title?: string
+  class?: HTMLAttributes['class']
   ui?: {
     content?: HTMLAttributes['class']
     description?: HTMLAttributes['class']
@@ -28,7 +28,7 @@ const slots = useSlots()
 </script>
 
 <template>
-  <Card :class="props.class" v-bind="$attrs">
+  <Card :class="cn('shadow-3', props?.class)" v-bind="$attrs">
     <slot v-if="slots.header" name="header" />
 
     <CardHeader v-else-if="title || subtitle" :class="ui?.header">
@@ -42,7 +42,7 @@ const slots = useSlots()
 
     <CardContent v-if="slots.default || description" :class="ui?.content">
       <slot v-if="slots.default" />
-      <p v-else :class="cn('line-clamp-3 text-sm leading-6 wrap-anywhere text-muted-foreground', ui?.description)">
+      <p v-else :class="cn('line-clamp-3 wrap-anywhere', ui?.description)">
         {{ description }}
       </p>
     </CardContent>

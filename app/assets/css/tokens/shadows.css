@@ -1,0 +1,23 @@
+:root {
+  /* y: 2px; blur: 4px; opacity: 5% */
+  --elevation-1: 0 0.125rem 0.25rem oklch(0 0 0 / 0.05);
+  /* y: 4px; blur: 10px; opacity: 10% */
+  --elevation-2: 0 0.25rem 0.625rem oklch(0 0 0 / 0.1);
+  /* y: 4px; blur: 10px; opacity: 7% */
+  --elevation-3: 0 0.25rem 0.625rem oklch(0 0 0 / 0.07);
+  /* y: 8px; blur: 20px; opacity: 16% */
+  --elevation-4: 0 0.5rem 1.25rem oklch(0 0 0 / 0.16);
+  /* y: 8px; blur: 24px; opacity: 15% */
+  --elevation-5: 0 0.5rem 1.5rem oklch(0 0 0 / 0.15);
+  /* y: 12px; blur: 28px; opacity: 20% */
+  --elevation-6: 0 0.75rem 1.75rem oklch(0 0 0 / 0.2);
+}
+
+.dark {
+  --elevation-1: 0 0.125rem 0.25rem oklch(0 0 0 / 0.2);
+  --elevation-2: 0 0.25rem 0.625rem oklch(0 0 0 / 0.28);
+  --elevation-3: 0 0.25rem 0.625rem oklch(0 0 0 / 0.24);
+  --elevation-4: 0 0.5rem 1.25rem oklch(0 0 0 / 0.36);
+  --elevation-5: 0 0.5rem 1.5rem oklch(0 0 0 / 0.4);
+  --elevation-6: 0 0.75rem 1.75rem oklch(0 0 0 / 0.48);
+}
