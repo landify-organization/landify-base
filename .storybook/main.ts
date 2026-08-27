@@ -8,7 +8,7 @@ const currentDir = dirname(fileURLToPath(import.meta.url))
 
 const config: StorybookConfig = {
   stories: ['../stories/**/*.stories.@(ts|tsx)'],
-  addons: ['@storybook/addon-a11y'],
+  addons: ['@storybook/addon-a11y', '@storybook/addon-themes'],
   framework: '@storybook/vue3-vite',
   async viteFinal(viteConfig) {
     viteConfig.resolve ??= {}

@@ -33,6 +33,7 @@
   "devDependencies": {
     "@nuxt/eslint-config": "^1.15.0",
     "@storybook/addon-a11y": "^10.5.10",
+    "@storybook/addon-themes": "^10.5.10",
     "@storybook/vue3-vite": "^10.5.10",
     "@types/node": "^24.13.3",
     "@vitejs/plugin-vue": "^6.0.8",
