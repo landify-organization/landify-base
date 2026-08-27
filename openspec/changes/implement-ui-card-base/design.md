@@ -52,6 +52,18 @@ when title or subtitle exists, and generated content exists only for a
 description. These rules directly satisfy the observable contract while
 avoiding empty landmarks and spacing.
 
+### Opinionated text defaults with part-specific overrides
+
+`UiCardBase` is a public, opinionated composition over the internal Card
+primitives. Generated title and subtitle text will be limited to one line and
+generated description text to three lines. A typed `ui` map will let consumers
+override the header, title, subtitle, content, description, or footer class
+without restating the composition. The root remains customized through `class`.
+
+The generated description is rendered in its own element within CardContent so
+the default-slot content is never line-clamped. Slots remain the mechanism for
+changing structure rather than styling an existing part.
+
 ## Risks / Trade-offs
 
 - [Slot-presence detection can be sensitive to empty slot content] → Stories
@@ -60,6 +72,8 @@ avoiding empty landmarks and spacing.
 - [Tailwind class conflicts can alter defaults] → Merge root classes with
   `cn()` so intentional consumer utilities take precedence while non-conflicting
   base classes remain.
+- [A generated-text rule could accidentally clip arbitrary slot content] →
+  Apply line clamping only to the generated text element, never CardContent.
 - [Visual regressions at narrow widths] → Use stack-friendly spacing and verify
   each Storybook scenario at 320px, 768px, and 1280px.
 

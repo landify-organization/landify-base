@@ -3,7 +3,7 @@ import type { Meta, StoryObj } from '@storybook/vue3-vite'
 import UiButton from '../app/components/ui/UiButton.vue'
 
 const meta = {
-  title: 'UI/Button',
+  title: 'Components/Button',
   component: UiButton,
   args: {
     variant: 'default',

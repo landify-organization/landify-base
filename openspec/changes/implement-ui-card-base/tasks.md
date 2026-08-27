@@ -18,3 +18,12 @@
       and custom header/content/footer slots.
 - [ ] 3.2 Run formatting, lint, typecheck, and Storybook build; inspect the
       stories at 320px, 768px, and 1280px.
+
+## 4. API refinement and Storybook taxonomy
+
+- [x] 4.1 Add the typed per-part `ui` customization API and apply default
+      generated-text limits without clamping default-slot content.
+- [x] 4.2 Organize primitive stories under `Components/*` and composition
+      stories under `Blocks/*`, including Card override coverage.
+- [x] 4.3 Re-run relevant validation and update the pull request with the
+      refined API and verification status.

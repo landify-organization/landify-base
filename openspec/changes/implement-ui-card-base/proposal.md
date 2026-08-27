@@ -14,8 +14,10 @@ while retaining consumer control over semantic content and local styling.
   emitted empty.
 - Forward non-prop attributes to the Card root and merge a consumer `class`
   with the component's semantic base styles.
+- Provide typed per-part class overrides while preserving default text-length
+  rules for generated title, subtitle, and description content.
 - Add Storybook coverage for the default, optional-section, and slot-customized
-  uses.
+  uses under the Components and Blocks taxonomy.
 
 ## Capabilities
 

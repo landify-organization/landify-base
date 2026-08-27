@@ -4,12 +4,13 @@ import UiCardBase from '../app/components/ui/UiCardBase.vue'
 import UiButton from '../app/components/ui/UiButton.vue'
 
 const meta = {
-  title: 'UI/Card Base',
+  title: 'Components/Card/Base',
   component: UiCardBase,
   args: {
     description: 'Use the default description for concise supporting content in a reusable Card.',
     subtitle: 'A flexible building block',
     title: 'Keep your content organized',
+    class: 'max-w-sm',
   },
 } satisfies Meta<typeof UiCardBase>
 
@@ -24,6 +25,18 @@ export const TitleOnly: Story = {
     description: undefined,
     subtitle: undefined,
     title: 'A Card without empty sections',
+  },
+}
+
+export const CustomizedText: Story = {
+  args: {
+    description:
+      'This longer description demonstrates that consumers can change the default three-line limit without replacing the Card structure.',
+    title: 'A title that may use two lines when this particular layout needs more room',
+    ui: {
+      description: 'line-clamp-none',
+      title: 'line-clamp-2',
+    },
   },
 }
 
