@@ -33,7 +33,7 @@ GitHub Account / Organization
 
 - Design System: source-owned shadcn-vue `Ui*` primitives, generic `Block*` compositions, and Reka UI behavior beneath them.
 
-- shadcn-vue semantic theme tokens, Tailwind CSS v4, typography, spacing, responsive conventions.
+- shadcn-vue semantic theme tokens, Tailwind CSS v4, semantic font hooks, spacing, and responsive component conventions. Font files and brand-specific font providers remain consumer-owned.
 
 - Composables, utils, layouts, generic marketing/admin blocks và Nuxt config có tính tái sử dụng.
 
@@ -97,6 +97,12 @@ Xem `docs/architecture/consumer-tooling.md` để biết giới hạn với dyna
 `landify-base` dùng shadcn-vue như một source distribution: CLI thêm source component vào Base, sau đó Landify sở hữu và review source đó như code nội bộ. Reka UI vẫn là lớp headless/accessibility bên dưới. Consumer dùng public `Ui*` component của Layer, không gọi Reka trực tiếp.
 
 Theme dùng semantic variable chuẩn shadcn-vue (`--primary`, `--background`, `--border`, v.v.). Consumer đặt CSS override sau stylesheet của Layer để thay brand; component dùng Tailwind semantic utility như `bg-primary`, không dùng palette/brand color trực tiếp.
+
+Base không tải một web font cụ thể. Nó cung cấp system fallback và semantic font hooks như `--font-sans` và `--font-heading`; consumer tự load font bằng cơ chế phù hợp rồi override các biến này sau stylesheet của Layer. Cách này tránh network request và brand decision không cần thiết trong mọi consumer.
+
+Responsive component dùng mobile-first utilities, default breakpoints và container queries của Tailwind CSS v4. Base không tạo một hệ breakpoint riêng nếu chưa có nhu cầu lặp lại rõ ràng. Mỗi shared component phải hoạt động từ viewport 320px, không gây horizontal overflow, và giữ keyboard/focus behavior ở mọi layout.
+
+Media responsive dùng Nuxt Image thay vì một wrapper `ResponsiveImage` riêng. Base có thể cung cấp module và dùng `NuxtImg`/`NuxtPicture` trong shared blocks; consumer sở hữu provider, remote domains, presets và deployment-specific image settings.
 
 `Block*` là composition generic có thể phục vụ marketing, dashboard hoặc back-office. Base chỉ cung cấp cấu trúc UI; business data, phân quyền, API, analytics và campaign content thuộc consumer.
 
