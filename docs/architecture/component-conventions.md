@@ -25,7 +25,7 @@
 - Consumers load their own font files or provider integration, then override the semantic font variables in CSS loaded after the Layer.
 - Shared components use Tailwind CSS mobile-first utilities and its default breakpoints or container queries. Do not add Base-wide custom breakpoints for a one-off page requirement.
 - Review each public component at 320px, 768px, and 1280px. Components must avoid horizontal overflow and preserve readable content, keyboard operation, focus visibility, and accessible names at each layout.
-- Prefer `NuxtImg` or `NuxtPicture` for responsive and optimized media. Consumer repositories own provider, domain, preset, and deployment-specific configuration.
+- Use `UiImage` for shared landing-page image behavior. It is the public wrapper over Nuxt Image and preserves responsive delivery, loading/error/fallback behavior, and layout reservation. Consumer repositories own provider, domain, preset, and deployment-specific configuration.
 - Motion is progressive enhancement. Shared components must not require animation to communicate state and must respect reduced-motion preferences; a separate Base motion system is deferred until repeated needs justify it.
 
 ## Customization hierarchy
@@ -42,7 +42,7 @@ The first stable component set is intentionally driven by a complete product CTA
 
 1. Finalize `UiButton` and add `UiCard`.
 2. Establish `BlockContainer` and `BlockSection` as the layout foundation.
-3. Integrate Nuxt Image and add the accessible `UiDialog` and `UiAccordion` behaviors.
+3. Integrate Nuxt Image, add `UiImage`, and add the accessible `UiDialog` and `UiAccordion` behaviors.
 4. Compose `BlockSiteHeader`, `BlockHero`, `BlockFeatureGrid`, `BlockSocialProof`, `BlockFaq`, `BlockCallToAction`, and `BlockSiteFooter`.
 5. Validate the complete composition in a local Nuxt playground reference page.
 

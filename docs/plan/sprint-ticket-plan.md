@@ -63,7 +63,7 @@ Goal: complete the shared primitives, layout foundations, and media integration 
 | [LF-Base] [Markup] Implement UiCard                                      | High     | M    | markup, ui                  |
 | [LF-Base] [Markup] Implement BlockContainer                              | High     | M    | markup, ui, responsive      |
 | [LF-Base] [Markup] Implement BlockSection                                | High     | M    | markup, ui, responsive      |
-| [LF-Base] [Setup] Integrate Nuxt Image for responsive landing media      | High     | M    | build, ui, performance      |
+| [LF-Base] [FE] Implement responsive UiImage with Nuxt Image              | High     | M    | build, ui, performance      |
 | [LF-Base] [Markup] Implement UiDialog                                    | High     | L    | markup, ui, accessibility   |
 | [LF-Base] [Markup] Implement UiAccordion                                 | High     | M    | markup, ui, accessibility   |
 
@@ -221,7 +221,11 @@ Goal: extract the ESLint/Prettier conventions that were used and refined in `lan
 
 - Font files and font providers are consumer-owned brand concerns. Base exposes semantic font hooks and a neutral system fallback, but does not load a specific web font. Tailwind's default mobile-first breakpoints and container queries remain the responsive foundation; responsive and reduced-motion behavior are verified per component instead of being designed as separate systems.
 
-- Nuxt Image is the shared responsive-media foundation. Base integrates the module and uses `NuxtImg` or `NuxtPicture`; each consumer retains ownership of remote domains, providers, presets, and deployment-specific image configuration. A separate `ResponsiveImage` wrapper is not planned unless repeated product needs later justify one.
+- Nuxt Image is the shared responsive-media engine. Base integrates the module
+  and exposes `UiImage` as the public wrapper for responsive sizing, lifecycle
+  states, fallback, and layout reservation; each consumer retains ownership of
+  remote domains, providers, presets, and deployment-specific image
+  configuration.
 
 - `UiInput`, `UiLabel`, `UiTextarea`, `UiCheckbox`, `UiSelect`, `UiTabs`, `UiTooltip`, `UiBadge`, `BlockPageHeader`, and `BlockEmptyState` remain in the post-v1 backlog. Form primitives become the next priority if a future landing page requires lead capture.
 
