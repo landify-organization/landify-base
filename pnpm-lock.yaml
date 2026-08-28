@@ -41,6 +41,9 @@ importers:
       '@storybook/addon-a11y':
         specifier: ^10.5.10
         version: 10.5.10(storybook@10.5.10(prettier@3.9.6)(react@19.2.8))
+      '@storybook/addon-themes':
+        specifier: ^10.5.10
+        version: 10.5.10(storybook@10.5.10(prettier@3.9.6)(react@19.2.8))
       '@storybook/vue3-vite':
         specifier: ^10.5.10
         version: 10.5.10(esbuild@0.28.2)(rollup@4.62.5)(storybook@10.5.10(prettier@3.9.6)(react@19.2.8))(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))(vue@3.5.41(typescript@5.9.3))
@@ -1533,6 +1536,12 @@ packages:
   '@storybook/addon-a11y@10.5.10':
     resolution:
       { integrity: sha512-RpRQV5xUbrl6hCiNrd5FSMIo6pnRZ0VZxWvEW/ASLcreGkKUW5jl2AeLCe5YROE2i80s/dU+6VPzOYKrwWNFbQ== }
+    peerDependencies:
+      storybook: ^10.5.10
+
+  '@storybook/addon-themes@10.5.10':
+    resolution:
+      { integrity: sha512-XNTjmIBwJ0TUcIV11STGY6hcynCy6imgYCDZeDaDyNEQsCoYAlY25fYvWNfrz5jOu1MGACiaA/E0ypk03whDdQ== }
     peerDependencies:
       storybook: ^10.5.10
 
@@ -7272,6 +7281,11 @@ snapshots:
       '@storybook/global': 5.0.0
       axe-core: 4.13.0
       storybook: 10.5.10(prettier@3.9.6)(react@19.2.8)
+
+  '@storybook/addon-themes@10.5.10(storybook@10.5.10(prettier@3.9.6)(react@19.2.8))':
+    dependencies:
+      storybook: 10.5.10(prettier@3.9.6)(react@19.2.8)
+      ts-dedent: 2.3.0
 
   '@storybook/builder-vite@10.5.10(esbuild@0.28.2)(rollup@4.62.5)(storybook@10.5.10(prettier@3.9.6)(react@19.2.8))(vite@8.2.2(@types/node@24.13.3)(esbuild@0.28.2)(jiti@2.7.0)(terser@5.50.0)(yaml@2.9.0))':
     dependencies:
