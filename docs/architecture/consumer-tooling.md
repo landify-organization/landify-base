@@ -179,7 +179,16 @@ A consumer loads its selected font locally or through its preferred Nuxt integra
 
 Shared components use Tailwind CSS v4's mobile-first default breakpoints and container queries. A consumer can add page-specific responsive behavior, but should not require Base to introduce a global custom breakpoint for a single campaign.
 
-Base integrates Nuxt Image as the shared responsive-media capability and uses `NuxtImg` or `NuxtPicture` where a reusable block owns image rendering. Each consumer configures its provider, allowed remote domains, presets, and deployment-specific behavior because those choices depend on its asset host and platform.
+Base integrates Nuxt Image as the shared responsive-media capability and exposes
+`UiImage` as the public primitive for reusable image lifecycle and layout
+behavior. Each consumer configures its provider, allowed remote domains, presets,
+and deployment-specific behavior because those choices depend on its asset host
+and platform.
+
+When a consumer uses Nuxt Image's default IPX provider and builds on a different
+OS or CPU architecture from deployment, it must install the matching `sharp`
+binaries through its package-manager configuration or build on the deployment
+platform.
 
 ### Sprint 5: Template copies a working snapshot
 

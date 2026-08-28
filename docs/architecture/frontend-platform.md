@@ -102,7 +102,11 @@ Base không tải một web font cụ thể. Nó cung cấp system fallback và 
 
 Responsive component dùng mobile-first utilities, default breakpoints và container queries của Tailwind CSS v4. Base không tạo một hệ breakpoint riêng nếu chưa có nhu cầu lặp lại rõ ràng. Mỗi shared component phải hoạt động từ viewport 320px, không gây horizontal overflow, và giữ keyboard/focus behavior ở mọi layout.
 
-Media responsive dùng Nuxt Image thay vì một wrapper `ResponsiveImage` riêng. Base có thể cung cấp module và dùng `NuxtImg`/`NuxtPicture` trong shared blocks; consumer sở hữu provider, remote domains, presets và deployment-specific image settings.
+Media responsive dùng Nuxt Image làm engine tối ưu và delivery. Base cung cấp
+public `UiImage` cho responsive sizing, lifecycle states, fallback và layout
+reservation; component không thay thế image optimizer hoặc hard-code provider.
+Consumer sở hữu provider, remote domains, presets và deployment-specific image
+settings.
 
 `Block*` là composition generic có thể phục vụ marketing, dashboard hoặc back-office. Base chỉ cung cấp cấu trúc UI; business data, phân quyền, API, analytics và campaign content thuộc consumer.
 

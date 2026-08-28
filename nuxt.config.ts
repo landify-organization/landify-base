@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     name: 'landify-base',
   },
   compatibilityDate: '2026-08-25',
+  modules: ['@nuxt/image'],
   components: [
     {
       path: join(currentDir, './app/components'),
